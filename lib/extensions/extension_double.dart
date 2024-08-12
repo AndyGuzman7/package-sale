@@ -1,3 +1,6 @@
+import 'package:intl/intl.dart';
+import 'dart:math' as math;
+
 extension ValidationDouble on double {
   double emptyValue(double value) {
     if (this == 0) {
@@ -77,5 +80,43 @@ extension IterableDoubleExtension on Iterable<double> {
       result += value;
     }
     return result;
+  }
+}
+
+extension FormatDouble on double {
+  String format(String currency, int round) {
+    final formatter = NumberFormat.decimalPatternDigits(decimalDigits: round);
+    final amount = formatter.format(abs());
+    final isNegative = this < 0;
+    final negativeSymbol = isNegative ? '- ' : '';
+    return '$negativeSymbol$currency$amount';
+  }
+
+  String decimals(int round) {
+    final formatter = NumberFormat.decimalPatternDigits(decimalDigits: round);
+    final number = formatter.format(this);
+    return number;
+  }
+
+  double decimalsNumeric(int round) {
+    final factor = math.pow(10, round);
+    return (this * factor).round() / factor;
+  }
+
+  /*double decimalsRound(int c) {
+    final factor = math.pow(10, c);
+    return (this * factor).round() / factor;
+  }*/
+
+  double decimalsRound(int c) {
+    final numeroConDosDecimales = (this * 100).round() / 100;
+    return numeroConDosDecimales;
+  }
+
+  double roundByArea(int round) {
+    final formatter = NumberFormat.decimalPatternDigits(decimalDigits: round);
+    final number = formatter.format(this);
+    final cleaned = number.replaceAll(',', '');
+    return double.parse(cleaned);
   }
 }
