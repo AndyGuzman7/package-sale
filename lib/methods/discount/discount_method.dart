@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:sale_zencillo/extensions/extendion_double.dart';
+import 'package:sale_zencillo/extensions/extension_double.dart';
 import 'package:sale_zencillo/methods/discount/discount_calculate.dart';
 import 'package:sale_zencillo/models/client_item_detail.dart';
 import 'package:sale_zencillo/models/discount.dart';
