@@ -9,6 +9,7 @@ export 'models/price_item_detail.dart';
 export 'models/sale_item.dart';
 export 'models/tax_item_detail.dart';
 export 'models/total.dart';
+export 'models/promotion_item.dart';
 
 export 'methods/discount/discount_calculate.dart';
 export 'methods/discount/discount_method.dart';
