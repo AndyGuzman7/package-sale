@@ -20,4 +20,7 @@ export 'methods/prices/prices_process.dart';
 export 'methods/taxes/tax_method.dart';
 export 'methods/taxes/tax_process.dart';
 
+export 'methods/promotions/promotion_method.dart';
+export 'methods/promotions/promotion_process.dart';
+
 export 'functions/total_calculations.dart';
