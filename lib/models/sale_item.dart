@@ -73,6 +73,7 @@ class SaleItem {
     required bool isIncluyeIva,
     required bool combinePromos,
     required double price,
+    required List<PromotionItem> promotions,
   })  : quantityOriginal = quantity,
         quantity = quantity,
         taxAmountOriginal = 0.0,
@@ -97,7 +98,7 @@ class SaleItem {
         idLine = idLine,
         subTotal = 0,
         total = 0,
-        promotions = const [],
+        promotions = promotions,
         promotionsUsed = const [],
         discountsUsed = const [];
 
