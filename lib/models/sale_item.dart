@@ -1,5 +1,6 @@
 import 'package:sale_zencillo/models/discount_item_detail.dart';
 import 'package:sale_zencillo/models/price_item_detail.dart';
+import 'package:sale_zencillo/models/promotion_item.dart';
 import 'package:sale_zencillo/models/tax_item_detail.dart';
 
 class SaleItem {
@@ -16,12 +17,12 @@ class SaleItem {
     required this.discountPercent,
     required this.discounts,
     required this.discountsUsed,
-    required this.ishaveDiscounts,
     required this.prices,
     required this.taxes,
     required this.price,
     required this.priceOriginal,
     required this.isIncluyeIva,
+    required this.combinePromos,
     required this.idTaxRate,
     required this.idArticle,
     required this.idBrand,
@@ -29,6 +30,8 @@ class SaleItem {
     required this.idLine,
     required this.subTotal,
     required this.total,
+    required this.promotions,
+    required this.promotionsUsed,
   });
 
   const SaleItem.empty()
@@ -43,12 +46,12 @@ class SaleItem {
         discountPercentOriginal = 0.0,
         discountPercent = 0.0,
         discounts = const [],
-        ishaveDiscounts = false,
         prices = const [],
         taxes = const [],
         price = 0,
         priceOriginal = 0,
         isIncluyeIva = false,
+        combinePromos = false,
         idTaxRate = 0,
         idArticle = 0,
         idBrand = 0,
@@ -56,6 +59,8 @@ class SaleItem {
         idLine = 0,
         subTotal = 0,
         total = 0,
+        promotions = const [],
+        promotionsUsed = const [],
         discountsUsed = const [];
 
   const SaleItem.article({
@@ -66,7 +71,9 @@ class SaleItem {
     required int idBrand,
     required int idTaxRate,
     required bool isIncluyeIva,
+    required bool combinePromos,
     required double price,
+    required List<PromotionItem> promotions,
   })  : quantityOriginal = quantity,
         quantity = quantity,
         taxAmountOriginal = 0.0,
@@ -78,12 +85,12 @@ class SaleItem {
         discountPercentOriginal = 0.0,
         discountPercent = 0.0,
         discounts = const [],
-        ishaveDiscounts = false,
         prices = const [],
         taxes = const [],
         price = price,
         priceOriginal = price,
         isIncluyeIva = isIncluyeIva,
+        combinePromos = combinePromos,
         idTaxRate = idTaxRate,
         idArticle = idArticle,
         idBrand = idBrand,
@@ -91,6 +98,8 @@ class SaleItem {
         idLine = idLine,
         subTotal = 0,
         total = 0,
+        promotions = promotions,
+        promotionsUsed = const [],
         discountsUsed = const [];
 
   final double quantityOriginal;
@@ -111,15 +120,17 @@ class SaleItem {
   final List<DiscountItemDetail> discounts;
   final List<DiscountItemDetail> discountsUsed;
 
-  final bool ishaveDiscounts;
-
   final List<PriceItemDetail> prices;
+
+  final List<PromotionItem> promotions;
+  final List<PromotionItem> promotionsUsed;
 
   final double price;
   final double priceOriginal;
 
   final List<TaxItemDetail> taxes;
 
+  final bool combinePromos;
   final bool isIncluyeIva;
 
   final int idTaxRate;
@@ -130,6 +141,8 @@ class SaleItem {
 
   final double subTotal;
   final double total;
+
+  bool get ishaveDiscounts => discounts.isNotEmpty;
 
   SaleItem copyWith({
     double? quantityOriginal,
@@ -151,6 +164,7 @@ class SaleItem {
     double? priceOriginal,
     List<TaxItemDetail>? taxes,
     bool? isIncluyeIva,
+    bool? combinePromos,
     int? idTaxRate,
     int? idArticle,
     int? idCategory,
@@ -158,6 +172,8 @@ class SaleItem {
     int? idBrand,
     double? subTotal,
     double? total,
+    List<PromotionItem>? promotions,
+    List<PromotionItem>? promotionsUsed,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -174,12 +190,12 @@ class SaleItem {
       discountPercent: discountPercent ?? this.discountPercent,
       discounts: discounts ?? this.discounts,
       discountsUsed: discountsUsed ?? this.discountsUsed,
-      ishaveDiscounts: ishaveDiscounts ?? this.ishaveDiscounts,
       prices: prices ?? this.prices,
       price: price ?? this.price,
       priceOriginal: priceOriginal ?? this.priceOriginal,
       taxes: taxes ?? this.taxes,
       isIncluyeIva: isIncluyeIva ?? this.isIncluyeIva,
+      combinePromos: combinePromos ?? this.combinePromos,
       idTaxRate: idTaxRate ?? this.idTaxRate,
       idArticle: idArticle ?? this.idArticle,
       idBrand: idBrand ?? this.idBrand,
@@ -187,6 +203,8 @@ class SaleItem {
       idLine: idLine ?? this.idLine,
       subTotal: subTotal ?? this.subTotal,
       total: total ?? this.total,
+      promotions: promotions ?? this.promotions,
+      promotionsUsed: promotionsUsed ?? this.promotionsUsed,
     );
   }
 }
