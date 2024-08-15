@@ -23,6 +23,7 @@ class SaleItem {
     required this.priceOriginal,
     required this.isIncluyeIva,
     required this.combinePromos,
+    required this.isPriceModified,
     required this.idTaxRate,
     required this.idArticle,
     required this.idBrand,
@@ -51,6 +52,7 @@ class SaleItem {
         price = 0,
         priceOriginal = 0,
         isIncluyeIva = false,
+        isPriceModified = false,
         combinePromos = false,
         idTaxRate = 0,
         idArticle = 0,
@@ -98,6 +100,7 @@ class SaleItem {
         idLine = idLine,
         subTotal = 0,
         total = 0,
+        isPriceModified = false,
         promotions = promotions,
         promotionsUsed = const [],
         discountsUsed = const [];
@@ -132,6 +135,7 @@ class SaleItem {
 
   final bool combinePromos;
   final bool isIncluyeIva;
+  final bool isPriceModified;
 
   final int idTaxRate;
   final int idArticle;
@@ -165,6 +169,7 @@ class SaleItem {
     List<TaxItemDetail>? taxes,
     bool? isIncluyeIva,
     bool? combinePromos,
+    bool? isPriceModified,
     int? idTaxRate,
     int? idArticle,
     int? idCategory,
@@ -201,6 +206,7 @@ class SaleItem {
       idBrand: idBrand ?? this.idBrand,
       idCategory: idCategory ?? this.idCategory,
       idLine: idLine ?? this.idLine,
+      isPriceModified: isPriceModified ?? this.isPriceModified,
       subTotal: subTotal ?? this.subTotal,
       total: total ?? this.total,
       promotions: promotions ?? this.promotions,
