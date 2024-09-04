@@ -32,12 +32,12 @@ class DiscountSale extends Equatable {
   final double? value;
 
   final bool allPayWay;
-  final List<DetailSale>? detail;
+  final List<DetailDiscount>? detail;
   final bool aplicaxunidad;
   final double? valorexacto;
 
   DiscountSale setDetail(
-    Iterable<DetailSale> detail,
+    Iterable<DetailDiscount> detail,
   ) {
     return DiscountSale(
         idDiscount: idDiscount,
@@ -72,8 +72,8 @@ class DiscountSale extends Equatable {
       ];
 }
 
-class DetailSale {
-  DetailSale({
+class DetailDiscount {
+  DetailDiscount({
     required this.idDetail,
     required this.idClient,
     required this.identification,

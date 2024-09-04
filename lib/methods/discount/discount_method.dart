@@ -262,7 +262,7 @@ class DiscountMethods {
         if (percent != 0) value = percent;
 
         var type = TypeDiscount.none;
-        if (isValorExacto) type = TypeDiscount.valorExacto;
+        if (isAplicaxunidad) type = TypeDiscount.isXunidad;
         //if (isAplicaxunidad) type = TypeDiscount.isXunidad;
 
         if (isValorExacto && isAplicaxunidad) type = TypeDiscount.valorExacto;
