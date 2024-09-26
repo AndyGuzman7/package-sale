@@ -18,18 +18,18 @@ main() {
     );
 
     final detailSale = DetailDiscount(
-      idDetail: 101,
-      idClient: 12345,
-      identification: 'ABC123456',
-      idArticle: 303,
-      idClientType: null,
-      idClasification: null,
-      idGroup: null,
-      idLine: null,
-      idBrand: null,
-      idCategory: null,
-      idPayWay: null,
-    );
+        idDetail: 101,
+        idClient: 12345,
+        identification: 'ABC123456',
+        idArticle: 303,
+        idClientType: null,
+        idClasification: null,
+        idGroup: null,
+        idLine: null,
+        idBrand: null,
+        idCategory: null,
+        idPayWay: null,
+        nameGroup: 'asdasd');
 
     final discountSale = DiscountSale(
       idDiscount: 1,
