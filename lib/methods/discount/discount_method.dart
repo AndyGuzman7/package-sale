@@ -18,23 +18,23 @@ class DiscountMethods {
         dis2.addAll(
           discount.detail!.map(
             (detail) => DiscountItem(
-              idDiscount: discount.idDiscount,
-              idDetail: detail.idDetail,
-              aplicaxunidad: discount.aplicaxunidad,
-              valorexacto: discount.valorexacto == 1,
-              allPayWay: discount.allPayWay,
-              idPayWay: detail.idPayWay ?? -1,
-              idArticulo: detail.idArticle ?? -1,
-              identification: detail.identification ?? 'NaN',
-              idClasification: detail.idClasification ?? -1,
-              idClientType: detail.idClientType ?? -1,
-              idGroup: detail.idGroup ?? -1,
-              percent: discount.percent ?? 0.0,
-              idBrand: detail.idBrand ?? -1,
-              idCategory: detail.idCategory ?? -1,
-              idLine: detail.idLine ?? -1,
-              amount: discount.value ?? 0.0,
-            ),
+                idDiscount: discount.idDiscount,
+                idDetail: detail.idDetail,
+                aplicaxunidad: discount.aplicaxunidad,
+                valorexacto: discount.valorexacto == 1,
+                allPayWay: discount.allPayWay,
+                idPayWay: detail.idPayWay ?? -1,
+                idArticulo: detail.idArticle ?? -1,
+                identification: detail.identification ?? 'NaN',
+                idClasification: detail.idClasification ?? -1,
+                idClientType: detail.idClientType ?? -1,
+                idGroup: detail.idGroup ?? -1,
+                percent: discount.percent ?? 0.0,
+                idBrand: detail.idBrand ?? -1,
+                idCategory: detail.idCategory ?? -1,
+                idLine: detail.idLine ?? -1,
+                amount: discount.value ?? 0.0,
+                nameGroup: detail.nameGroup ?? ''),
           ),
         );
       }
@@ -92,6 +92,7 @@ class DiscountMethods {
     final idBusinessGroup = client.idBusinessGroup;
     final idClasification = client.idClasification;
     final idType = client.idType;
+    final nameGroup = client.nameGroup;
 
     final discounts = convertDiscounts(discounts: features);
 
@@ -104,6 +105,7 @@ class DiscountMethods {
         idType,
         payWays,
         idClasification,
+        nameGroup,
       );
 
       return article.copyWith(
@@ -125,18 +127,19 @@ class DiscountMethods {
     final idBusinessGroup = client.idBusinessGroup;
     final idClasification = client.idClasification;
     final idType = client.idType;
+    final nameGroup = client.nameGroup;
 
     final discounts = convertDiscounts(discounts: features);
 
     final listDiscountsAplicate = filterApplicate(
-      discounts,
-      item,
-      idBusinessGroup,
-      identification,
-      idType,
-      payWays,
-      idClasification,
-    );
+        discounts,
+        item,
+        idBusinessGroup,
+        identification,
+        idType,
+        payWays,
+        idClasification,
+        nameGroup);
 
     return item.copyWith(
       discounts: listDiscountsAplicate,
@@ -168,14 +171,14 @@ class DiscountMethods {
   }) {}*/
 
   static List<DiscountItemDetail> filterApplicate(
-    List<DiscountItem> discounts,
-    SaleItem articleUsed,
-    int idBusinessGroup,
-    String identification,
-    int idType,
-    List<int> payWays,
-    int? idClasification,
-  ) {
+      List<DiscountItem> discounts,
+      SaleItem articleUsed,
+      int idBusinessGroup,
+      String identification,
+      int idType,
+      List<int> payWays,
+      int? idClasification,
+      String nameGroup) {
     final listDiscountsAplicate = <DiscountItemDetail>[];
     for (final d in discounts) {
       final list = <String>[];
@@ -249,6 +252,12 @@ class DiscountMethods {
       if (idPayWay != -1) listB.add(v9);
       final isPayWay = payWays.any((element) => element == idPayWay);
       if (isPayWay) list.add(v9);
+
+      const v10 = '10';
+      final nameGroupClient = d.nameGroup;
+      if (nameGroupClient != 'NaN') listB.add(v10);
+      final isNameGroup = nameGroupClient == nameGroup;
+      if (isNameGroup) list.add(v10);
 
       final isDiscount = listEquals(list, listB);
 

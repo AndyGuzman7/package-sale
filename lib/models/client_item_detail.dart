@@ -14,6 +14,7 @@ class ClientItemDetail extends Equatable {
     required this.identificationTypeName,
     required this.identification,
     required this.idPayWay,
+    required this.nameGroup,
   });
 
   const ClientItemDetail.empty()
@@ -30,6 +31,7 @@ class ClientItemDetail extends Equatable {
           identificationTypeName: '',
           identification: '',
           idPayWay: 2,
+          nameGroup: '',
         );
 
   final int idClient;
@@ -43,6 +45,7 @@ class ClientItemDetail extends Equatable {
   final int idIdentificationType;
   final String identificationTypeName;
   final String identification;
+  final String nameGroup;
 
   final int idPayWay;
 
@@ -59,6 +62,7 @@ class ClientItemDetail extends Equatable {
     String? identificationTypeName,
     String? identification,
     int? idPayWay,
+    String? nameGroup,
   }) {
     return ClientItemDetail(
       idClient: idClient ?? this.idClient,
@@ -74,6 +78,7 @@ class ClientItemDetail extends Equatable {
           identificationTypeName ?? this.identificationTypeName,
       identification: identification ?? this.identification,
       idPayWay: idPayWay ?? this.idPayWay,
+      nameGroup: nameGroup ?? this.nameGroup,
     );
   }
 
@@ -91,5 +96,6 @@ class ClientItemDetail extends Equatable {
         identificationTypeName,
         identification,
         idPayWay,
+        nameGroup,
       ];
 }

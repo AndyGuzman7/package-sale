@@ -85,6 +85,7 @@ class DetailDiscount {
     required this.idBrand,
     required this.idCategory,
     required this.idPayWay,
+    required this.nameGroup,
   });
 
   final int idDetail;
@@ -98,4 +99,5 @@ class DetailDiscount {
   final int? idBrand;
   final int? idCategory;
   final int? idPayWay;
+  final String? nameGroup;
 }

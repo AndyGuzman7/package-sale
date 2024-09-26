@@ -18,6 +18,7 @@ class DiscountItem extends Equatable {
     required this.idCategory,
     required this.idLine,
     required this.amount,
+    required this.nameGroup,
   });
   final int idDiscount;
   final int idDetail;
@@ -35,6 +36,7 @@ class DiscountItem extends Equatable {
   final int idCategory;
   final int idLine;
   final double amount;
+  final String nameGroup;
 
   @override
   List<Object?> get props => [
@@ -54,6 +56,7 @@ class DiscountItem extends Equatable {
         idCategory,
         idLine,
         amount,
+        nameGroup,
       ];
 
   DiscountItem copyWith({
@@ -73,6 +76,7 @@ class DiscountItem extends Equatable {
     int? idCategory,
     int? idLine,
     double? amount,
+    String? nameGroup,
   }) {
     return DiscountItem(
       idDiscount: idDiscount ?? this.idDiscount,
@@ -91,6 +95,7 @@ class DiscountItem extends Equatable {
       idCategory: idCategory ?? this.idCategory,
       idLine: idLine ?? this.idLine,
       amount: amount ?? this.amount,
+      nameGroup: nameGroup ?? this.nameGroup,
     );
   }
 }
