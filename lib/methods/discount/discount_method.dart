@@ -34,7 +34,7 @@ class DiscountMethods {
                 idCategory: detail.idCategory ?? -1,
                 idLine: detail.idLine ?? -1,
                 amount: discount.value ?? 0.0,
-                nameGroup: detail.nameGroup ?? ''),
+                nameGroup: detail.nameGroup ?? 'NaN'),
           ),
         );
       }
