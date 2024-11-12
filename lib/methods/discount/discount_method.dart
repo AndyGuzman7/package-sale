@@ -285,7 +285,15 @@ class DiscountMethods {
     required SaleItem saleItem,
   }) {
     final discount = saleItem.discounts.firstOrNull;
-    if (discount == null) return saleItem;
+    if (discount == null) {
+      return saleItem.copyWith(
+          discountAmount: 0,
+          discountAmountOriginal: 0,
+          discountPercent: 0,
+          discountPercentOriginal: 0,
+          discounts: [],
+          discountsUsed: []);
+    }
 
     final quantity = saleItem.quantity.emptyValue(1);
     final value = discount.value;
