@@ -33,6 +33,8 @@ class SaleItem {
     required this.total,
     required this.promotions,
     required this.promotionsUsed,
+    required this.subSidy,
+    required this.subSidyPrice,
   });
 
   const SaleItem.empty()
@@ -61,6 +63,8 @@ class SaleItem {
         idLine = 0,
         subTotal = 0,
         total = 0,
+        subSidy = 0,
+        subSidyPrice = 0,
         promotions = const [],
         promotionsUsed = const [],
         discountsUsed = const [];
@@ -76,12 +80,16 @@ class SaleItem {
     required bool combinePromos,
     required double price,
     required List<PromotionItem> promotions,
+    required double subSidy,
+    required double subSidyPrice,
   })  : quantityOriginal = quantity,
         quantity = quantity,
         taxAmountOriginal = 0.0,
         taxAmount = 0.0,
         taxPercentOriginal = 0.0,
         taxPercent = 0.0,
+        subSidy = subSidy,
+        subSidyPrice = subSidyPrice,
         discountAmountOriginal = 0.0,
         discountAmount = 0.0,
         discountPercentOriginal = 0.0,
@@ -146,6 +154,9 @@ class SaleItem {
   final double subTotal;
   final double total;
 
+  final double subSidy;
+  final double subSidyPrice;
+
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
   SaleItem copyWith({
@@ -179,6 +190,8 @@ class SaleItem {
     double? total,
     List<PromotionItem>? promotions,
     List<PromotionItem>? promotionsUsed,
+    double? subSidy,
+    double? subSidyPrice,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -211,6 +224,8 @@ class SaleItem {
       total: total ?? this.total,
       promotions: promotions ?? this.promotions,
       promotionsUsed: promotionsUsed ?? this.promotionsUsed,
+      subSidy: subSidy ?? this.subSidy,
+      subSidyPrice: subSidyPrice ?? this.subSidyPrice,
     );
   }
 }

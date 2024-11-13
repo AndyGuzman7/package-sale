@@ -1,5 +1,6 @@
-import 'package:intl/intl.dart';
 import 'dart:math' as math;
+
+import 'package:intl/intl.dart';
 
 extension ValidationDouble on double {
   double emptyValue(double value) {
@@ -114,6 +115,13 @@ extension FormatDouble on double {
   }
 
   double roundByArea(int round) {
+    final formatter = NumberFormat.decimalPatternDigits(decimalDigits: round);
+    final number = formatter.format(this);
+    final cleaned = number.replaceAll(',', '');
+    return double.parse(cleaned);
+  }
+
+  double roundTo(int round) {
     final formatter = NumberFormat.decimalPatternDigits(decimalDigits: round);
     final number = formatter.format(this);
     final cleaned = number.replaceAll(',', '');

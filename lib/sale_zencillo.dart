@@ -18,6 +18,7 @@ export 'models/discount_item_detail.dart';
 export 'models/discount_result.dart';
 export 'models/price_item_detail.dart';
 export 'models/promotion_item.dart';
+export 'models/round_amount.dart';
 export 'models/sale_item.dart';
 export 'models/tax_item_detail.dart';
 export 'models/tax_result.dart';
