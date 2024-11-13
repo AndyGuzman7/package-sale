@@ -107,6 +107,51 @@ class TaxMethods {
         taxPercent: taxPercent,
         taxAmount: newTaxAmount,
         price: newPrice,
+      );
+      return article;
+    }
+    return article;
+  }
+
+  static SaleItem changeItemPro({
+    required SaleItem article,
+  }) {
+    final taxes = article.taxes;
+    if (taxes.isNotEmpty) {
+      final taxPercent = taxes.first.percent;
+
+      final price = article.price;
+      final taxAmount = article.taxAmount;
+
+      final includesIva = article.isIncluyeIva;
+
+      final percent = 1 + (taxPercent / 100);
+
+      var discountAmount = article.discountAmount;
+      /* if (article.discountPercent != 0) {
+        discountAmount = price * article.discountPercent / 100;
+      }*/
+      final quantity = article.quantity.emptyValue(1);
+      final subTotal = quantity * price;
+
+      var newTaxAmount = taxAmount;
+      var newPrice = price;
+      if (includesIva) {
+        final priceDiscount = subTotal - discountAmount;
+        newTaxAmount = priceDiscount - (priceDiscount / percent);
+
+        final tA = price - (price / percent);
+        newPrice = price - tA;
+      } else {
+        final priceT = price - discountAmount;
+
+        newTaxAmount = priceT * (taxPercent / 100);
+      }
+
+      article = article.copyWith(
+        taxPercent: taxPercent,
+        taxAmount: newTaxAmount,
+        price: newPrice,
         priceOriginal: newPrice,
       );
       return article;
