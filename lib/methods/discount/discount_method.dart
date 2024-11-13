@@ -1,15 +1,8 @@
 import 'package:flutter/foundation.dart';
-
-import 'package:sale_zencillo/extensions/extension_double.dart';
-import 'package:sale_zencillo/methods/discount/discount_calculate.dart';
-import 'package:sale_zencillo/models/client_item_detail.dart';
-import 'package:sale_zencillo/models/discount.dart';
-import 'package:sale_zencillo/models/discount_item.dart';
-import 'package:sale_zencillo/models/discount_item_detail.dart';
-import 'package:sale_zencillo/models/sale_item.dart';
+import 'package:sale_zencillo/sale_zencillo.dart';
 
 class DiscountMethods {
-  static List<DiscountItem> convertDiscounts({
+  static List<DiscountItem> _convertDiscounts({
     required List<DiscountSale> discounts,
   }) {
     final dis2 = <DiscountItem>[];
@@ -42,49 +35,12 @@ class DiscountMethods {
     return dis2;
   }
 
-  /*static SaleItem changeItem({required SaleItem saleItem}) {
-    final listDiscount = saleItem.discounts;
-    final firstDiscount = listDiscount.firstOrNull;
-    if (firstDiscount == null) return saleItem;
-
-    var discountAmount = saleItem.discountAmount;
-    var discountPercent = saleItem.discountPercent;
-
-    switch (firstDiscount.modeDiscount) {
-      case ModeDiscount.percent:
-        discountPercent = firstDiscount.value;
-      case ModeDiscount.amount:
-        discountAmount = firstDiscount.value;
-      case ModeDiscount.none:
-        discountAmount = saleItem.discountAmount;
-        discountPercent = saleItem.discountPercent;
-    }
-
-    saleItem = saleItem.copyWith(
-      discountAmount: discountAmount,
-      discountAmountOriginal: discountAmount,
-      discountPercent: discountPercent,
-      discountPercentOriginal: discountPercent,
-      discountsUsed: [firstDiscount],
-      modeDiscount: firstDiscount.modeDiscount,
-    );
-
-    return calculateValueDiscount(saleItem: saleItem);
-  }*/
-
-  static List<SaleItem> changeItemList({
-    required List<SaleItem> articlesEntity,
-  }) {
-    final articles = articlesEntity.map((e) {
-      return changeItem(saleItem: e);
-    }).toList();
-
-    return articles;
-  }
-
-  static List<SaleItem> prepare({
-    required List<SaleItem> items,
-    required List<DiscountSale> features,
+  static List<DiscountItemDetail> prepareSingle({
+    required int idArticleUsed,
+    required int idCategoryUsed,
+    required int idLineUsed,
+    required int idBrandUsed,
+    required List<DiscountSale> discounts,
     required ClientItemDetail client,
     required List<int> payWays,
   }) {
@@ -93,89 +49,36 @@ class DiscountMethods {
     final idClasification = client.idClasification;
     final idType = client.idType;
 
-    final discounts = convertDiscounts(discounts: features);
+    final convertDiscounts = _convertDiscounts(discounts: discounts);
 
-    final articles = items.map((article) {
-      final listDiscountsAplicate = filterApplicate(
-        discounts,
-        article,
-        idBusinessGroup,
-        identification,
-        idType,
-        payWays,
-        idClasification,
-      );
-
-      return article.copyWith(
-        discounts: listDiscountsAplicate,
-        ishaveDiscounts: listDiscountsAplicate.isNotEmpty,
-      );
-    }).toList();
-
-    return articles;
-  }
-
-  static SaleItem prepareSingle({
-    required SaleItem item,
-    required List<DiscountSale> features,
-    required ClientItemDetail client,
-    required List<int> payWays,
-  }) {
-    final identification = client.identification;
-    final idBusinessGroup = client.idBusinessGroup;
-    final idClasification = client.idClasification;
-    final idType = client.idType;
-
-    final discounts = convertDiscounts(discounts: features);
-
-    final listDiscountsAplicate = filterApplicate(
-      discounts,
-      item,
-      idBusinessGroup,
-      identification,
-      idType,
-      payWays,
-      idClasification,
+    final filterDiscounts = _filterDiscounst(
+      discounts: convertDiscounts,
+      idBusinessGroup: idBusinessGroup,
+      identification: identification,
+      idType: idType,
+      payWays: payWays,
+      idClasification: idClasification,
+      idArticleUsed: idArticleUsed,
+      idBrandUsed: idBrandUsed,
+      idLineUsed: idLineUsed,
+      idCategoryUsed: idCategoryUsed,
     );
 
-    return item.copyWith(
-      discounts: listDiscountsAplicate,
-      ishaveDiscounts: listDiscountsAplicate.isNotEmpty,
-    );
+    return filterDiscounts;
   }
 
-  static List<SaleItem> processMain({
-    required List<SaleItem> items,
-    required List<DiscountSale> features,
-    required ClientItemDetail client,
+  static List<DiscountItemDetail> _filterDiscounst({
+    required List<DiscountItem> discounts,
+    required int idBusinessGroup,
+    required String identification,
+    required int idType,
     required List<int> payWays,
-    bool isPrepare = false,
+    required int? idClasification,
+    required int idArticleUsed,
+    required int idCategoryUsed,
+    required int idLineUsed,
+    required int idBrandUsed,
   }) {
-    if (isPrepare) {
-      items = prepare(
-        items: items,
-        features: features,
-        client: client,
-        payWays: payWays,
-      );
-    }
-
-    return changeItemList(articlesEntity: items);
-  }
-
-  /*static List<SaleItem> calculateMain({
-    required List<SaleItem> items,
-  }) {}*/
-
-  static List<DiscountItemDetail> filterApplicate(
-    List<DiscountItem> discounts,
-    SaleItem articleUsed,
-    int idBusinessGroup,
-    String identification,
-    int idType,
-    List<int> payWays,
-    int? idClasification,
-  ) {
     final listDiscountsAplicate = <DiscountItemDetail>[];
     for (final d in discounts) {
       final list = <String>[];
@@ -198,28 +101,28 @@ class DiscountMethods {
       const v2 = '02';
       final idArticulo = d.idArticulo;
       if (idArticulo != -1) listB.add(v2);
-      final isArticleDiscount = idArticulo == articleUsed.idArticle;
+      final isArticleDiscount = idArticulo == idArticleUsed;
       if (isArticleDiscount) list.add(v2);
 
       //03
       const v3 = '03';
       final idCategoria = d.idCategory;
       if (idCategoria != -1) listB.add(v3);
-      final isCategoryDiscount = idCategoria == articleUsed.idCategory;
+      final isCategoryDiscount = idCategoria == idCategoryUsed;
       if (isCategoryDiscount) list.add(v3);
 
       //04
       const v4 = '04';
       final idLine = d.idLine;
       if (idLine != -1) listB.add(v4);
-      final isLineDiscount = idLine == articleUsed.idLine;
+      final isLineDiscount = idLine == idLineUsed;
       if (isLineDiscount) list.add('04');
 
       //05
       const v5 = '05';
       final idBrand = d.idBrand;
       if (idBrand != -1) listB.add(v5);
-      final isBrand = idBrand == articleUsed.idBrand;
+      final isBrand = idBrand == idBrandUsed;
       if (isBrand) list.add(v5);
 
       //06
@@ -281,34 +184,35 @@ class DiscountMethods {
     return listDiscountsAplicate;
   }
 
-  static SaleItem changeItem({
-    required SaleItem saleItem,
+  static DiscountResult changeItem({
+    // required SaleItem saleIstem,
+    required double quantity,
+    required double price,
+    required List<DiscountItemDetail> discounts,
   }) {
-    final discount = saleItem.discounts.firstOrNull;
+    final discount = discounts.firstOrNull;
     if (discount == null) {
-      return saleItem.copyWith(
-          discountAmount: 0,
-          discountAmountOriginal: 0,
-          discountPercent: 0,
-          discountPercentOriginal: 0,
-          discounts: [],
-          discountsUsed: []);
+      return DiscountResult(
+        discountAmount: 0,
+        discountPercent: 0,
+        discountsUsed: [],
+      );
     }
 
-    final quantity = saleItem.quantity.emptyValue(1);
+    quantity = quantity.emptyValue(1);
     final value = discount.value;
-    final price = saleItem.price;
+    //final price = saleItem.price;
 
     final modeDiscount = discount.modeDiscount;
 
     final isModeAmount = discount.modeDiscount == ModeDiscount.amount;
     final isModePercent = discount.modeDiscount == ModeDiscount.percent;
 
-    saleItem = saleItem.copyWith(
+    /*saleItem = saleItem.copyWith(
       discountAmountOriginal: isModeAmount ? discount.value : 0,
       discountPercentOriginal: isModePercent ? discount.value : 0,
       discountsUsed: [discount],
-    );
+    );*/
 
     switch (discount.typeDiscount) {
       case TypeDiscount.isXunidad:
@@ -318,9 +222,10 @@ class DiscountMethods {
           quantity: quantity,
           price: price,
         );
-        return saleItem.copyWith(
+        return DiscountResult(
           discountAmount: response.$1,
           discountPercent: response.$2,
+          discountsUsed: [discount],
         );
       case TypeDiscount.valorExacto:
         final response = DiscountCalculate.exactValue(
@@ -329,9 +234,10 @@ class DiscountMethods {
           quantity: quantity,
           price: price,
         );
-        return saleItem.copyWith(
+        return DiscountResult(
           discountAmount: response.$1,
           discountPercent: response.$2,
+          discountsUsed: [discount],
         );
       case TypeDiscount.none:
         final response = DiscountCalculate.normal(
@@ -340,9 +246,10 @@ class DiscountMethods {
           quantity: quantity,
           price: price,
         );
-        return saleItem.copyWith(
+        return DiscountResult(
           discountAmount: response.$1,
           discountPercent: response.$2,
+          discountsUsed: [discount],
         );
     }
   }

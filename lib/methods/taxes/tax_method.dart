@@ -1,6 +1,5 @@
-import 'package:sale_zencillo/extensions/extension_double.dart';
-import 'package:sale_zencillo/models/sale_item.dart';
 import 'package:sale_zencillo/models/tax_item_detail.dart';
+import 'package:sale_zencillo/models/tax_result.dart';
 
 class TaxMethods {
   static List<TaxItemDetail> _getTaxesArticle(
@@ -13,80 +12,36 @@ class TaxMethods {
     return taxesByArticle;
   }
 
-  static List<SaleItem> prepareTaxes({
+  static List<TaxItemDetail> prepare({
     required List<TaxItemDetail> taxes,
-    required List<SaleItem> articlesEntity,
+    required int idTaxRate,
   }) {
-    final articles = articlesEntity.map(
-      (e) {
-        final taxesArticle = _getTaxesArticle(e.idTaxRate, taxes);
-        return e.copyWith(taxes: taxesArticle);
-      },
-    ).toList();
-    return articles;
+    final taxesArticle = _getTaxesArticle(idTaxRate, taxes);
+    return taxesArticle;
   }
 
-  static SaleItem prepareSingle({
+  static TaxResult changeItem({
     required List<TaxItemDetail> taxes,
-    required SaleItem item,
+    required double price,
+    required double taxAmount,
+    required double taxPercent,
+    required bool includesIva,
+    required double discountAmount,
+    required double discountPercent,
   }) {
-    final taxesArticle = _getTaxesArticle(item.idTaxRate, taxes);
-    return item.copyWith(taxes: taxesArticle);
-  }
-
-  static double _calculatePriceIva(double price, double taxPercent) {
-    final percent = 1 + (taxPercent / 100);
-    return price - (price / percent);
-  }
-
-  static SaleItem changeItemPrice({
-    required SaleItem saleItem,
-  }) {
-    final taxes = saleItem.taxes;
-    if (taxes.isNotEmpty) {
-      final tax = taxes.first;
-      final taxPercent = tax.percent;
-
-      final quantity = saleItem.quantity.emptyValue(1);
-      final price = saleItem.price.orValue(
-        ok: saleItem.isIncluyeIva,
-        value: _calculatePriceIva(saleItem.price, taxPercent),
-      );
-      final discountAmount = saleItem.discountAmount;
-
-      final subTotal = quantity * price;
-
-      //aplicando descuento para sacar el valor del impuesto
-      final subTotalWithDiscount = subTotal - discountAmount;
-
-      final taxAmount = subTotalWithDiscount * (taxPercent / 100);
-
-      saleItem = saleItem.copyWith(
-        taxPercent: taxPercent,
-        taxAmount: taxAmount,
-        price: price,
-      );
-    }
-    return saleItem;
-  }
-
-  static SaleItem changeItem({
-    required SaleItem article,
-  }) {
-    final taxes = article.taxes;
     if (taxes.isNotEmpty) {
       final taxPercent = taxes.first.percent;
 
-      final price = article.price;
-      final taxAmount = article.taxAmount;
+      //final price = article.price;
+      //final taxAmount = article.taxAmount;
 
-      final includesIva = article.isIncluyeIva;
+      //final includesIva = article.isIncluyeIva;
 
       final percent = 1 + (taxPercent / 100);
 
-      var discountAmount = article.discountAmount;
-      if (article.discountPercent != 0) {
-        discountAmount = price * article.discountPercent / 100;
+      //var discountAmount = article.discountAmount;
+      if (discountPercent != 0) {
+        discountAmount = price * discountPercent / 100;
       }
 
       var newTaxAmount = taxAmount;
@@ -103,38 +58,16 @@ class TaxMethods {
         newTaxAmount = priceT * (taxPercent / 100);
       }
 
-      article = article.copyWith(
-        taxPercent: taxPercent,
+      return TaxResult(
         taxAmount: newTaxAmount,
+        taxPercent: taxPercent,
         price: newPrice,
-        priceOriginal: newPrice,
-      );
-      return article;
-    }
-    return article;
-  }
-
-  static List<SaleItem> changeItemListPrice({
-    required List<SaleItem> articlesEntity,
-  }) {
-    final articles = articlesEntity.map((e) {
-      return changeItemPrice(saleItem: e);
-    }).toList();
-
-    return articles;
-  }
-
-  static List<SaleItem> processMain({
-    required List<TaxItemDetail> taxes,
-    required List<SaleItem> articlesEntity,
-    bool isPrepare = false,
-  }) {
-    if (isPrepare) {
-      articlesEntity = prepareTaxes(
-        articlesEntity: articlesEntity,
-        taxes: taxes,
       );
     }
-    return changeItemListPrice(articlesEntity: articlesEntity);
+    return TaxResult(
+      taxAmount: taxAmount,
+      taxPercent: taxPercent,
+      price: price,
+    );
   }
 }
