@@ -250,5 +250,47 @@ void main() {
       expect(result.price, 15000);
       expect(result.taxAmount, 2565);
     });
+
+    test('tax bolsa de hielo2', () {
+      final result = TaxMethods.changeItemPro(
+          article: const SaleItem(
+        quantityOriginal: 1,
+        quantity: 1,
+        taxAmountOriginal: 0,
+        taxAmount: 0,
+        taxPercentOriginal: 0,
+        taxPercent: 19,
+        discountAmountOriginal: 0,
+        discountAmount: 0,
+        subSidy: 0,
+        subSidyPrice: 0,
+        discountPercentOriginal: 10,
+        discountPercent: 10,
+        discounts: [],
+        discountsUsed: [],
+        prices: [],
+        taxes: [
+          TaxItemDetail(idTaxRate: 1, percent: 19, code: 1),
+        ],
+        price: 180000,
+        priceOriginal: 180000,
+        isIncluyeIva: true,
+        combinePromos: true,
+        isPriceModified: true,
+        idTaxRate: 1,
+        idArticle: 1,
+        idBrand: 1,
+        idCategory: 1,
+        idLine: 1,
+        subTotal: 1,
+        total: 1,
+        promotions: [],
+        promotionsUsed: [],
+      ));
+
+      // Assert
+      expect(result.price, 151260.50420168068);
+      expect(result.taxAmount, 25865.546218487376);
+    });
   });
 }

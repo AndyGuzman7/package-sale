@@ -118,12 +118,12 @@ class TaxMethods {
   static double _priceIncluyeIva({
     required double taxPercent,
     required double price,
-    required double discountPercent,
   }) {
-    var discountAmount = price * (discountPercent / 100);
-    final priceDiscount = price - discountAmount;
     final percent = 1 + (taxPercent / 100);
-    return priceDiscount - (priceDiscount / percent);
+    final tA = price - (price / percent);
+    final newPrice = price - tA;
+
+    return newPrice;
   }
 
   static double _taxAmountIncluyeIva({
@@ -157,7 +157,6 @@ class TaxMethods {
 
     if (includesIva) {
       final priceIncluyeIva = _priceIncluyeIva(
-        discountPercent: discountPercent,
         price: price,
         taxPercent: taxPercent,
       );
