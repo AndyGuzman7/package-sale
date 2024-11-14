@@ -147,7 +147,7 @@ class TaxMethods {
 
     final taxPercent = taxes.first.percent;
 
-    final price = article.price;
+    final price = article.priceOriginal;
     final includesIva = article.isIncluyeIva;
 
     var discountAmount = article.discountAmount;
