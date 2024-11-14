@@ -160,10 +160,6 @@ class TaxMethods {
         price: price,
         taxPercent: taxPercent,
       );
-      print(taxPercent);
-      print(discountPercent);
-      print(price);
-      print(priceIncluyeIva.toString());
 
       final taxAmountIncluyeIva = _taxAmountIncluyeIva(
         discountPercent: discountPercent,
