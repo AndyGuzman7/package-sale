@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:sale_zencillo/extensions/extension_double.dart';
 import 'package:sale_zencillo/models/sale_item.dart';
 import 'package:sale_zencillo/models/tax_item_detail.dart';
@@ -113,50 +115,81 @@ class TaxMethods {
     return article;
   }
 
+  static double _priceIncluyeIva({
+    required double taxPercent,
+    required double price,
+    required double discountPercent,
+  }) {
+    var discountAmount = price * (discountPercent / 100);
+    final priceDiscount = price - discountAmount;
+    final percent = 1 + (taxPercent / 100);
+    return priceDiscount - (priceDiscount / percent);
+  }
+
+  static double _taxAmountIncluyeIva({
+    required double quantity,
+    required double price,
+    required double discountPercent,
+    required double taxPercent,
+  }) {
+    final subTotal = quantity * price;
+    var discountAmount = subTotal * (discountPercent / 100);
+    final priceDiscount = subTotal - discountAmount;
+    final percent = 1 + (taxPercent / 100);
+    return priceDiscount - (priceDiscount / percent);
+  }
+
   static SaleItem changeItemPro({
     required SaleItem article,
   }) {
     final taxes = article.taxes;
-    if (taxes.isNotEmpty) {
-      final taxPercent = taxes.first.percent;
+    if (taxes.isEmpty) return article;
 
-      final price = article.price;
-      final taxAmount = article.taxAmount;
+    final taxPercent = taxes.first.percent;
 
-      final includesIva = article.isIncluyeIva;
+    final price = article.price;
+    final includesIva = article.isIncluyeIva;
 
-      final percent = 1 + (taxPercent / 100);
+    var discountAmount = article.discountAmount;
+    var discountPercent = article.discountPercent;
 
-      var discountAmount = article.discountAmount;
-      /* if (article.discountPercent != 0) {
-        discountAmount = price * article.discountPercent / 100;
-      }*/
-      final quantity = article.quantity.emptyValue(1);
+    final quantity = article.quantity.emptyValue(1);
+
+    if (includesIva) {
+      final priceIncluyeIva = _priceIncluyeIva(
+        discountPercent: discountPercent,
+        price: price,
+        taxPercent: taxPercent,
+      );
+      print(taxPercent);
+      print(discountPercent);
+      print(price);
+      print(priceIncluyeIva.toString());
+
+      final taxAmountIncluyeIva = _taxAmountIncluyeIva(
+        discountPercent: discountPercent,
+        price: price,
+        quantity: quantity,
+        taxPercent: taxPercent,
+      );
+      article = article.copyWith(
+        taxPercent: taxPercent,
+        taxAmount: taxAmountIncluyeIva,
+        price: priceIncluyeIva,
+      );
+      return article;
+    } else {
       final subTotal = quantity * price;
-
-      var newTaxAmount = taxAmount;
-      var newPrice = price;
-      if (includesIva) {
-        final priceDiscount = subTotal - discountAmount;
-        newTaxAmount = priceDiscount - (priceDiscount / percent);
-
-        final tA = price - (price / percent);
-        newPrice = price - tA;
-      } else {
-        final priceT = price - discountAmount;
-
-        newTaxAmount = priceT * (taxPercent / 100);
-      }
+      var discountAmount = subTotal * (discountPercent / 100);
+      final priceDiscount = subTotal - discountAmount;
+      final taxAmount = priceDiscount * (taxPercent / 100);
 
       article = article.copyWith(
         taxPercent: taxPercent,
-        taxAmount: newTaxAmount,
-        price: newPrice,
-        priceOriginal: newPrice,
+        taxAmount: taxAmount,
       );
       return article;
     }
-    return article;
   }
 
   static List<SaleItem> changeItemListPrice({
