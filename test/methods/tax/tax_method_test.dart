@@ -6,7 +6,7 @@ void main() {
   group('taxes', () {
     test('tax1', () {
       final result = TaxMethods.changeItem(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 1,
         taxAmountOriginal: 0,
@@ -47,7 +47,7 @@ void main() {
     });
     test('tax2', () {
       final result = TaxMethods.changeItemPro(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 1,
         taxAmountOriginal: 0,
@@ -88,7 +88,7 @@ void main() {
     });
     test('tax3', () {
       final result = TaxMethods.changeItemPro(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 1,
         subSidy: 0,
@@ -129,7 +129,7 @@ void main() {
     });
     test('tax quantity 2', () {
       final result = TaxMethods.changeItemPro(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 2,
         taxAmountOriginal: 0,
@@ -170,7 +170,7 @@ void main() {
     });
     test('tax quantity price 9300', () {
       final result = TaxMethods.changeItemPro(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 1,
         taxAmountOriginal: 0,
@@ -211,7 +211,7 @@ void main() {
     });
     test('tax bolsa de hielo', () {
       final result = TaxMethods.changeItemPro(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 1,
         taxAmountOriginal: 0,
@@ -253,7 +253,7 @@ void main() {
 
     test('tax bolsa de hielo2', () {
       final result = TaxMethods.changeItemPro(
-          article: const SaleItem(
+          article: const SaleItem.articleNormal(
         quantityOriginal: 1,
         quantity: 1,
         taxAmountOriginal: 0,

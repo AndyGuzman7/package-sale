@@ -35,6 +35,14 @@ class SaleItem {
     required this.promotionsUsed,
     required this.subSidy,
     required this.subSidyPrice,
+
+    /// to calculate the tax other amount and percent
+    required this.taxOtherAmount,
+    required this.taxOtherPercent,
+    required this.idTaxOther,
+    required this.taxOtherName,
+    required this.taxOtherCode,
+    required this.taxOtherIsIncluye,
   });
 
   const SaleItem.empty()
@@ -67,7 +75,15 @@ class SaleItem {
         subSidyPrice = 0,
         promotions = const [],
         promotionsUsed = const [],
-        discountsUsed = const [];
+        discountsUsed = const [],
+
+        /// to calculate the tax other amount and percent
+        taxOtherAmount = 0,
+        taxOtherPercent = 0,
+        idTaxOther = 0,
+        taxOtherName = '',
+        taxOtherCode = '',
+        taxOtherIsIncluye = false;
 
   const SaleItem.article({
     required int idArticle,
@@ -82,6 +98,14 @@ class SaleItem {
     required List<PromotionItem> promotions,
     required double subSidy,
     required double subSidyPrice,
+
+    /// to calculate the tax other amount and percent
+    required double taxOtherAmount,
+    required double taxOtherPercent,
+    required int idTaxOther,
+    required String taxOtherName,
+    required String taxOtherCode,
+    required bool taxOtherIsIncluye,
   })  : quantityOriginal = quantity,
         quantity = quantity,
         taxAmountOriginal = 0.0,
@@ -111,7 +135,56 @@ class SaleItem {
         isPriceModified = false,
         promotions = promotions,
         promotionsUsed = const [],
-        discountsUsed = const [];
+        discountsUsed = const [],
+
+        /// to calculate the tax other amount and percent
+        taxOtherAmount = taxOtherAmount,
+        taxOtherPercent = taxOtherPercent,
+        idTaxOther = idTaxOther,
+        taxOtherName = taxOtherName,
+        taxOtherCode = taxOtherCode,
+        taxOtherIsIncluye = taxOtherIsIncluye;
+
+  const SaleItem.articleNormal({
+    required this.quantityOriginal,
+    required this.quantity,
+    required this.taxAmountOriginal,
+    required this.taxAmount,
+    required this.taxPercentOriginal,
+    required this.taxPercent,
+    required this.discountAmountOriginal,
+    required this.discountAmount,
+    required this.discountPercentOriginal,
+    required this.discountPercent,
+    required this.discounts,
+    required this.discountsUsed,
+    required this.prices,
+    required this.taxes,
+    required this.price,
+    required this.priceOriginal,
+    required this.isIncluyeIva,
+    required this.combinePromos,
+    required this.isPriceModified,
+    required this.idTaxRate,
+    required this.idArticle,
+    required this.idBrand,
+    required this.idCategory,
+    required this.idLine,
+    required this.subTotal,
+    required this.total,
+    required this.promotions,
+    required this.promotionsUsed,
+    required this.subSidy,
+    required this.subSidyPrice,
+  })  :
+
+        /// to calculate the tax other amount and percent
+        taxOtherAmount = 0,
+        taxOtherPercent = 0,
+        idTaxOther = 0,
+        taxOtherName = '',
+        taxOtherCode = '',
+        taxOtherIsIncluye = false;
 
   final double quantityOriginal;
   final double quantity;
@@ -157,6 +230,14 @@ class SaleItem {
   final double subSidy;
   final double subSidyPrice;
 
+  // to calculate the tax other amount and percent
+  final double taxOtherAmount;
+  final double taxOtherPercent;
+  final int idTaxOther;
+  final String taxOtherName;
+  final String taxOtherCode;
+  final bool taxOtherIsIncluye;
+
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
   SaleItem copyWith({
@@ -192,6 +273,14 @@ class SaleItem {
     List<PromotionItem>? promotionsUsed,
     double? subSidy,
     double? subSidyPrice,
+
+    /// to calculate the tax other amount and percent
+    double? taxOtherAmount,
+    double? taxOtherPercent,
+    int? idTaxOther,
+    String? taxOtherName,
+    String? taxOtherCode,
+    bool? taxOtherIsIncluye,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -226,6 +315,12 @@ class SaleItem {
       promotionsUsed: promotionsUsed ?? this.promotionsUsed,
       subSidy: subSidy ?? this.subSidy,
       subSidyPrice: subSidyPrice ?? this.subSidyPrice,
+      taxOtherAmount: taxOtherAmount ?? this.taxOtherAmount,
+      taxOtherPercent: taxOtherPercent ?? this.taxOtherPercent,
+      idTaxOther: idTaxOther ?? this.idTaxOther,
+      taxOtherName: taxOtherName ?? this.taxOtherName,
+      taxOtherCode: taxOtherCode ?? this.taxOtherCode,
+      taxOtherIsIncluye: taxOtherIsIncluye ?? this.taxOtherIsIncluye,
     );
   }
 }

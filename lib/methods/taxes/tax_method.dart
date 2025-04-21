@@ -187,6 +187,47 @@ class TaxMethods {
     }
   }
 
+  static SaleItem changeItemOtherPro({
+    required SaleItem article,
+  }) {
+    final taxPercent = article.taxPercent;
+    final taxOtherPercent = article.taxOtherPercent;
+    final price = article.price;
+    final priceOriginal = article.priceOriginal;
+
+    final includesIva = article.isIncluyeIva;
+    final includesOtherIva = article.taxOtherIsIncluye;
+
+    var discountAmount = article.discountAmount;
+    if (article.discountPercent != 0) {
+      discountAmount = price * article.discountPercent / 100;
+    }
+
+    if (taxOtherPercent != 0) {
+      var newPrice = price;
+      final otherPercent = 1 + (taxOtherPercent / 100);
+      var newTaxAmountOther = article.taxOtherAmount;
+      if (includesOtherIva) {
+        final priceT = priceOriginal - discountAmount;
+        newTaxAmountOther = priceT - (priceT / otherPercent);
+
+        final percentTotal =
+            includesIva ? taxPercent + taxOtherPercent : taxOtherPercent;
+        final percentNew = 1 + (percentTotal / 100);
+        final tA = priceOriginal - (priceOriginal / percentNew);
+        newPrice = priceOriginal - tA;
+      } else {
+        final priceT = price - discountAmount;
+        newTaxAmountOther = priceT * (taxOtherPercent / 100);
+      }
+      return article.copyWith(
+        taxOtherAmount: newTaxAmountOther,
+        price: newPrice,
+      );
+    }
+    return article;
+  }
+
   static List<SaleItem> changeItemListPrice({
     required List<SaleItem> articlesEntity,
   }) {
