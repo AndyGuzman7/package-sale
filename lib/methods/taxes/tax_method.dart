@@ -139,6 +139,51 @@ class TaxMethods {
     return priceDiscount - (priceDiscount / percent);
   }
 
+  static SaleItem taxeCalculate({
+    required SaleItem article,
+  }) {
+    final tax = article.taxes.where(
+      (e) => e.idTaxRate == article.idTaxRate,
+    );
+    if (tax.isNotEmpty) {
+      final taxPercent = tax.first.percent;
+
+      final price = article.price;
+      final taxAmount = article.taxAmount;
+
+      final includesIva = article.isIncluyeIva;
+
+      final percent = 1 + (taxPercent / 100);
+
+      var discountAmount = article.discountAmount;
+      if (article.discountPercent != 0) {
+        discountAmount = price * article.discountPercent / 100;
+      }
+
+      var newTaxAmount = taxAmount;
+      var newPrice = price;
+      if (includesIva) {
+        final priceT = price - discountAmount;
+        newTaxAmount = priceT - (priceT / percent);
+
+        final tA = price - (price / percent);
+        newPrice = price - tA;
+      } else {
+        final priceT = price - discountAmount;
+
+        newTaxAmount = priceT * (taxPercent / 100);
+      }
+
+      article = article.copyWith(
+        taxPercent: taxPercent,
+        taxAmount: newTaxAmount,
+        price: newPrice,
+      );
+    }
+
+    return article;
+  }
+
   static SaleItem changeItemPro({
     required SaleItem article,
   }) {
