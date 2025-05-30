@@ -32,8 +32,8 @@ class MargenProcess {
       amount = margen.amount;
     }
     return item.copyWith(
-      margenAmount: percentage,
-      margenPercent: amount,
+      margenAmount: amount,
+      margenPercent: percentage,
     );
   }
 
