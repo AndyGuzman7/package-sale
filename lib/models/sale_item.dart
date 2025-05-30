@@ -43,6 +43,11 @@ class SaleItem {
     required this.taxOtherName,
     required this.taxOtherCode,
     required this.taxOtherIsIncluye,
+
+    //to calculate the flete and margen
+    required this.fleteAmount,
+    required this.margenAmount,
+    required this.margenPercent,
   });
 
   const SaleItem.empty()
@@ -83,7 +88,10 @@ class SaleItem {
         idTaxOther = 0,
         taxOtherName = '',
         taxOtherCode = '',
-        taxOtherIsIncluye = false;
+        taxOtherIsIncluye = false,
+        margenAmount = 0,
+        fleteAmount = 0,
+        margenPercent = 0;
 
   const SaleItem.article({
     required int idArticle,
@@ -143,7 +151,10 @@ class SaleItem {
         idTaxOther = idTaxOther,
         taxOtherName = taxOtherName,
         taxOtherCode = taxOtherCode,
-        taxOtherIsIncluye = taxOtherIsIncluye;
+        taxOtherIsIncluye = taxOtherIsIncluye,
+        margenAmount = 0,
+        fleteAmount = 0,
+        margenPercent = 0;
 
   const SaleItem.articleNormal({
     required this.quantityOriginal,
@@ -176,6 +187,9 @@ class SaleItem {
     required this.promotionsUsed,
     required this.subSidy,
     required this.subSidyPrice,
+    required this.fleteAmount,
+    required this.margenAmount,
+    required this.margenPercent,
   })  :
 
         /// to calculate the tax other amount and percent
@@ -238,6 +252,11 @@ class SaleItem {
   final String taxOtherCode;
   final bool taxOtherIsIncluye;
 
+  //flete
+  final double fleteAmount;
+  final double margenAmount;
+  final double margenPercent;
+
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
   SaleItem copyWith({
@@ -281,6 +300,9 @@ class SaleItem {
     String? taxOtherName,
     String? taxOtherCode,
     bool? taxOtherIsIncluye,
+    double? fleteAmount,
+    double? margenAmount,
+    double? margenPercent,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -321,6 +343,9 @@ class SaleItem {
       taxOtherName: taxOtherName ?? this.taxOtherName,
       taxOtherCode: taxOtherCode ?? this.taxOtherCode,
       taxOtherIsIncluye: taxOtherIsIncluye ?? this.taxOtherIsIncluye,
+      fleteAmount: fleteAmount ?? this.fleteAmount,
+      margenAmount: margenAmount ?? this.margenAmount,
+      margenPercent: margenPercent ?? this.margenPercent,
     );
   }
 }
