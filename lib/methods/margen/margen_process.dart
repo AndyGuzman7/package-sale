@@ -92,6 +92,7 @@ class MargenProcess {
 
     saleItem = saleItem.copyWith(
       price: newPrice + flete,
+      priceOriginal: newPrice + flete,
     );
     return saleItem;
   }
