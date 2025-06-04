@@ -83,10 +83,12 @@ class MargenProcess {
   }) {
     final price = saleItem.priceOriginalConst;
     final flete = saleItem.fleteAmount;
+    double margen = 0.0;
 
     var newPrice = price;
     if (saleItem.margenPercent > 0) {
-      newPrice = price + (price * saleItem.margenPercent / 100);
+      margen = (price * saleItem.margenPercent / 100);
+      newPrice = price + margen;
     } else if (saleItem.margenAmount > 0) {
       newPrice = price + saleItem.margenAmount;
     }
@@ -94,6 +96,7 @@ class MargenProcess {
     saleItem = saleItem.copyWith(
       price: newPrice + flete,
       priceOriginal: newPrice + flete,
+      margenAmountPercent: margen,
     );
     return saleItem;
   }

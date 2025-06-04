@@ -49,6 +49,7 @@ class SaleItem {
     required this.margenAmount,
     required this.margenPercent,
     required this.priceOriginalConst,
+    required this.margenAmountPercent,
   });
 
   const SaleItem.empty()
@@ -93,6 +94,7 @@ class SaleItem {
         margenAmount = 0,
         fleteAmount = 0,
         priceOriginalConst = 0,
+        margenAmountPercent = 0,
         margenPercent = 0;
 
   const SaleItem.article({
@@ -157,6 +159,7 @@ class SaleItem {
         taxOtherIsIncluye = taxOtherIsIncluye,
         margenAmount = 0,
         fleteAmount = 0,
+        margenAmountPercent = 0,
         margenPercent = 0;
 
   const SaleItem.articleNormal({
@@ -194,6 +197,7 @@ class SaleItem {
     required this.margenAmount,
     required this.margenPercent,
     required this.priceOriginalConst,
+    required this.margenAmountPercent,
   })  :
 
         /// to calculate the tax other amount and percent
@@ -262,6 +266,7 @@ class SaleItem {
   final double margenPercent;
 
   final double priceOriginalConst;
+  final double margenAmountPercent;
 
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
@@ -310,6 +315,7 @@ class SaleItem {
     double? margenAmount,
     double? margenPercent,
     double? priceOriginalConst,
+    double? margenAmountPercent,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -354,6 +360,7 @@ class SaleItem {
       margenAmount: margenAmount ?? this.margenAmount,
       margenPercent: margenPercent ?? this.margenPercent,
       priceOriginalConst: priceOriginalConst ?? this.priceOriginalConst,
+      margenAmountPercent: margenAmountPercent ?? this.margenAmountPercent,
     );
   }
 }
