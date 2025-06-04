@@ -31,6 +31,7 @@ class PriceMethods {
         ? saleItem.copyWith(
             price: price,
             priceOriginal: price,
+            priceOriginalConst: price,
           )
         : saleItem;
   }

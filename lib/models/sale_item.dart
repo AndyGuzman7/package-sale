@@ -48,6 +48,7 @@ class SaleItem {
     required this.fleteAmount,
     required this.margenAmount,
     required this.margenPercent,
+    required this.priceOriginalConst,
   });
 
   const SaleItem.empty()
@@ -91,6 +92,7 @@ class SaleItem {
         taxOtherIsIncluye = false,
         margenAmount = 0,
         fleteAmount = 0,
+        priceOriginalConst = 0,
         margenPercent = 0;
 
   const SaleItem.article({
@@ -131,6 +133,7 @@ class SaleItem {
         taxes = const [],
         price = price,
         priceOriginal = price,
+        priceOriginalConst = price,
         isIncluyeIva = isIncluyeIva,
         combinePromos = combinePromos,
         idTaxRate = idTaxRate,
@@ -190,6 +193,7 @@ class SaleItem {
     required this.fleteAmount,
     required this.margenAmount,
     required this.margenPercent,
+    required this.priceOriginalConst,
   })  :
 
         /// to calculate the tax other amount and percent
@@ -257,6 +261,8 @@ class SaleItem {
   final double margenAmount;
   final double margenPercent;
 
+  final double priceOriginalConst;
+
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
   SaleItem copyWith({
@@ -303,6 +309,7 @@ class SaleItem {
     double? fleteAmount,
     double? margenAmount,
     double? margenPercent,
+    double? priceOriginalConst,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -346,6 +353,7 @@ class SaleItem {
       fleteAmount: fleteAmount ?? this.fleteAmount,
       margenAmount: margenAmount ?? this.margenAmount,
       margenPercent: margenPercent ?? this.margenPercent,
+      priceOriginalConst: priceOriginalConst ?? this.priceOriginalConst,
     );
   }
 }

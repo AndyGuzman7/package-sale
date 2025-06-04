@@ -57,7 +57,7 @@ class MargenProcess {
   static SaleItem _changeItem({
     required SaleItem saleItem,
   }) {
-    final price = saleItem.priceOriginal;
+    final price = saleItem.priceOriginalConst;
     var newPrice = price;
     if (saleItem.margenPercent > 0) {
       newPrice = price + (price * saleItem.margenPercent / 100);
@@ -67,6 +67,7 @@ class MargenProcess {
 
     saleItem = saleItem.copyWith(
       price: newPrice,
+      priceOriginal: newPrice,
     );
     return saleItem;
   }
