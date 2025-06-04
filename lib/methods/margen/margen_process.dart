@@ -81,7 +81,7 @@ class MargenProcess {
   static SaleItem _changeItemPro({
     required SaleItem saleItem,
   }) {
-    final price = saleItem.priceOriginal;
+    final price = saleItem.priceOriginalConst;
     final flete = saleItem.fleteAmount;
 
     var newPrice = price;
