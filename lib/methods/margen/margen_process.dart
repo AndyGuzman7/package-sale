@@ -1,4 +1,3 @@
-import 'package:sale_zencillo/extensions/extension_double.dart';
 import 'package:sale_zencillo/models/margen_item.dart';
 import 'package:sale_zencillo/models/sale_item.dart';
 
@@ -89,18 +88,14 @@ class MargenProcess {
     var newPrice = price;
     if (saleItem.margenPercent > 0) {
       margen = (price * saleItem.margenPercent / 100);
-      newPrice = (price + margen).roundTo(2);
+      newPrice = price + margen;
     } else if (saleItem.margenAmount > 0) {
-      newPrice = (price + saleItem.margenAmount).roundTo(2);
-    }
-
-    if (flete > 0) {
-      newPrice = (newPrice + flete).roundTo(2);
+      newPrice = price + saleItem.margenAmount;
     }
 
     saleItem = saleItem.copyWith(
-      price: newPrice,
-      priceOriginal: newPrice,
+      price: newPrice + flete,
+      priceOriginal: newPrice + flete,
       margenAmountPercent: margen,
     );
     return saleItem;
