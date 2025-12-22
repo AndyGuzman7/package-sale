@@ -35,6 +35,7 @@ class SaleItem {
     required this.promotionsUsed,
     required this.subSidy,
     required this.subSidyPrice,
+    required this.priceModified,
   });
 
   const SaleItem.empty()
@@ -67,6 +68,7 @@ class SaleItem {
         subSidyPrice = 0,
         promotions = const [],
         promotionsUsed = const [],
+        priceModified = 0,
         discountsUsed = const [];
 
   const SaleItem.article({
@@ -82,12 +84,13 @@ class SaleItem {
     required List<PromotionItem> promotions,
     required double subSidy,
     required double subSidyPrice,
+    required double taxPercent,
   })  : quantityOriginal = quantity,
         quantity = quantity,
         taxAmountOriginal = 0.0,
         taxAmount = 0.0,
-        taxPercentOriginal = 0.0,
-        taxPercent = 0.0,
+        taxPercentOriginal = taxPercent,
+        taxPercent = taxPercent,
         subSidy = subSidy,
         subSidyPrice = subSidyPrice,
         discountAmountOriginal = 0.0,
@@ -110,6 +113,47 @@ class SaleItem {
         total = 0,
         isPriceModified = false,
         promotions = promotions,
+        priceModified = 0,
+        promotionsUsed = const [],
+        discountsUsed = const [];
+
+  const SaleItem.articleXml({
+    required int idArticle,
+    required double quantity,
+    required double price,
+    required double taxPercent,
+    required double taxValue,
+    required double subTotal,
+    required double total,
+  })  : quantityOriginal = quantity,
+        quantity = quantity,
+        taxAmountOriginal = taxValue,
+        taxAmount = taxValue,
+        taxPercentOriginal = taxPercent,
+        taxPercent = taxPercent,
+        subSidy = 0.0,
+        subSidyPrice = 0.0,
+        discountAmountOriginal = 0.0,
+        discountAmount = 0.0,
+        discountPercentOriginal = 0.0,
+        discountPercent = 0.0,
+        discounts = const [],
+        prices = const [],
+        taxes = const [],
+        price = price,
+        priceOriginal = price,
+        isIncluyeIva = false,
+        combinePromos = false,
+        idTaxRate = 0,
+        idArticle = idArticle,
+        idBrand = 0,
+        idCategory = 0,
+        idLine = 0,
+        subTotal = subTotal,
+        total = total,
+        isPriceModified = false,
+        promotions = const [],
+        priceModified = 0,
         promotionsUsed = const [],
         discountsUsed = const [];
 
@@ -156,6 +200,7 @@ class SaleItem {
 
   final double subSidy;
   final double subSidyPrice;
+  final double priceModified;
 
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
@@ -192,6 +237,7 @@ class SaleItem {
     List<PromotionItem>? promotionsUsed,
     double? subSidy,
     double? subSidyPrice,
+    double? priceModified,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -226,6 +272,7 @@ class SaleItem {
       promotionsUsed: promotionsUsed ?? this.promotionsUsed,
       subSidy: subSidy ?? this.subSidy,
       subSidyPrice: subSidyPrice ?? this.subSidyPrice,
+      priceModified: priceModified ?? this.priceModified,
     );
   }
 }
