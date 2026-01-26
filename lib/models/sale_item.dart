@@ -36,6 +36,7 @@ class SaleItem {
     required this.subSidy,
     required this.subSidyPrice,
     required this.priceModified,
+    required this.ultimoCosto,
   });
 
   const SaleItem.empty()
@@ -69,6 +70,7 @@ class SaleItem {
         promotions = const [],
         promotionsUsed = const [],
         priceModified = 0,
+        ultimoCosto = 0,
         discountsUsed = const [];
 
   const SaleItem.article({
@@ -114,6 +116,7 @@ class SaleItem {
         isPriceModified = false,
         promotions = promotions,
         priceModified = 0,
+        ultimoCosto = 0,
         promotionsUsed = const [],
         discountsUsed = const [];
 
@@ -154,6 +157,7 @@ class SaleItem {
         isPriceModified = false,
         promotions = const [],
         priceModified = 0,
+        ultimoCosto = 0,
         promotionsUsed = const [],
         discountsUsed = const [];
 
@@ -201,6 +205,7 @@ class SaleItem {
   final double subSidy;
   final double subSidyPrice;
   final double priceModified;
+  final double ultimoCosto;
 
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
@@ -238,6 +243,7 @@ class SaleItem {
     double? subSidy,
     double? subSidyPrice,
     double? priceModified,
+    double? ultimoCosto,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -273,6 +279,7 @@ class SaleItem {
       subSidy: subSidy ?? this.subSidy,
       subSidyPrice: subSidyPrice ?? this.subSidyPrice,
       priceModified: priceModified ?? this.priceModified,
+      ultimoCosto: ultimoCosto ?? this.ultimoCosto,
     );
   }
 }
