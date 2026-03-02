@@ -37,6 +37,9 @@ class SaleItem {
     required this.subSidyPrice,
     required this.priceModified,
     required this.ultimoCosto,
+    required this.itbisRetentionRD,
+    required this.isrRetentionRD,
+    required this.bienOrServicio,
   });
 
   const SaleItem.empty()
@@ -71,6 +74,9 @@ class SaleItem {
         promotionsUsed = const [],
         priceModified = 0,
         ultimoCosto = 0,
+        itbisRetentionRD = 0,
+        isrRetentionRD = 0,
+        bienOrServicio = 0,
         discountsUsed = const [];
 
   const SaleItem.article({
@@ -117,6 +123,9 @@ class SaleItem {
         promotions = promotions,
         priceModified = 0,
         ultimoCosto = 0,
+        itbisRetentionRD = 0,
+        isrRetentionRD = 0,
+        bienOrServicio = 0,
         promotionsUsed = const [],
         discountsUsed = const [];
 
@@ -158,6 +167,9 @@ class SaleItem {
         promotions = const [],
         priceModified = 0,
         ultimoCosto = 0,
+        itbisRetentionRD = 0,
+        isrRetentionRD = 0,
+        bienOrServicio = 0,
         promotionsUsed = const [],
         discountsUsed = const [];
 
@@ -207,6 +219,11 @@ class SaleItem {
   final double priceModified;
   final double ultimoCosto;
 
+  final double itbisRetentionRD;
+  final double isrRetentionRD;
+
+  final int bienOrServicio;
+
   bool get ishaveDiscounts => discounts.isNotEmpty;
 
   SaleItem copyWith({
@@ -244,6 +261,9 @@ class SaleItem {
     double? subSidyPrice,
     double? priceModified,
     double? ultimoCosto,
+    double? itbisRetentionRD,
+    double? isrRetentionRD,
+    int? bienOrServicio,
   }) {
     return SaleItem(
       quantityOriginal: quantityOriginal ?? this.quantityOriginal,
@@ -280,6 +300,9 @@ class SaleItem {
       subSidyPrice: subSidyPrice ?? this.subSidyPrice,
       priceModified: priceModified ?? this.priceModified,
       ultimoCosto: ultimoCosto ?? this.ultimoCosto,
+      itbisRetentionRD: itbisRetentionRD ?? this.itbisRetentionRD,
+      isrRetentionRD: isrRetentionRD ?? this.isrRetentionRD,
+      bienOrServicio: bienOrServicio ?? this.bienOrServicio,
     );
   }
 }
